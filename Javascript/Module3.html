@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Counter Example</title>
+    <style>
+      /* CSS styling for the counter */
+      #counter {
+        font-size: 2em;
+        text-align: center;
+        color: white;
+      }
+
+      #buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 1em;
+      }
+
+      button {
+        margin: 0 1em;
+        padding: 0.5em 1em;
+        font-size: 1.2em;
+        cursor: pointer;
+      }
+
+      h1 {
+        text-align: center;
+        color: white;
+      }
+
+      body {
+        background-color: #222;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h1>Counter Example</h1>
+    <hr>
+    <div id="counter">0</div>
+    <div id="buttons">
+      <button id="increment">+</button>
+      <button id="decrement">-</button>
+    </div>
+
+    <script>
+      // Get the counter and buttons elements from the DOM
+      const counterEl = document.getElementById("counter");
+      const incrementBtn = document.getElementById("increment");
+      const decrementBtn = document.getElementById("decrement");
+
+      // Initialize the counter to zero
+      let counter = 0;
+
+      // Function to update the counter text and value
+      function updateCounter() {
+        counterEl.innerText = counter;
+      }
+
+      // Add an event listener to the increase button
+      incrementBtn.addEventListener("click", () => {
+        counter += 1;
+        updateCounter();
+      });
+
+      // Add an event listener to the decrease button
+      decrementBtn.addEventListener("click", () => {
+        counter -= 1;
+        updateCounter();
+      });
+    </script>
+  </body>
+</html>
