@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quiz</title>
+</head>
+<body>
+
+	<h1>Quiz</h1>
+
+	<form id="quizForm">
+		<p>1. Who was Scooby-doo's first criminal?</p>
+		<label><input type="radio" name="q1" value="a">a) The Black Knight </label><br>
+		<label><input type="radio" name="q1" value="b">b) The Space Kook</label><br>
+		<label><input type="radio" name="q1" value="c">c) The Creeper</label><br>
+
+		<p>2. When did Alice In Chains release the album "Dirt"? </p>
+		<label><input type="radio" name="q2" value="a">a) 1986</label><br>
+		<label><input type="radio" name="q2" value="b">b) 2001</label><br>
+		<label><input type="radio" name="q2" value="c">c) 1992</label><br>
+
+		<p>3. When did Queen Elizabth II die?</p>
+		<label><input type="radio" name="q3" value="a">a) 1996</label><br>
+		<label><input type="radio" name="q3" value="b">b) 2022</label><br>
+		<label><input type="radio" name="q3" value="c">c) 2020</label><br>
+
+		<p>4. Who was the first person to step on the moon?</p>
+		<label><input type="radio" name="q4" value="a">a) Neil Armstrong</label><br>
+		<label><input type="radio" name="q4" value="b">b) Buzz Aldrin</label><br>
+		<label><input type="radio" name="q4" value="c">c) Yuri Gagarin</label><br>
+
+		<p>5. What is the smallest country in the world?</p>
+		<label><input type="radio" name="q5" value="a">a) Monaco</label><br>
+		<label><input type="radio" name="q5" value="b">b) Vatican City</label><br>
+		<label><input type="radio" name="q5" value="c">c) San Marino</label><br>
+
+		<button type="submit">Submit</button>
+	</form>
+
+	<div id="result"></div>
+
+	<script>
+		// define the correct answers
+		const answers = ["a", "c", "b", "a", "b"];
+
+		// add event listener to the form on submission
+		document.querySelector('#quizForm').addEventListener('submit', function(e) {
+			e.preventDefault(); // prevent the form from submitting normally
+
+			let score = 0;
+			let userAnswers = [];
+
+			// get the user's answers and store them in an array
+			for (let i = 1; i <= 5; i++) {
+				let userAnswer = document.querySelector('input[name="q'+i+'"]:checked');
+				if (userAnswer) {
+					userAnswers.push(userAnswer.value);
+				}
+			}
+
+			// calculate the score
+			for (let i = 0; i < answers.length; i++) {
+				if (userAnswers[i] === answers[i]) {
+                    score++;
+                }
+            }
+            // output the result to the page
+            let result = document.querySelector('#result');
+            result.innerHTML = 'You got ' + score + ' out of 5 questions correct.';
+        });
+    </script>
+</body>
+</html>
