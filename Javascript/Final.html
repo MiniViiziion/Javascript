@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pokemon API Final</title>
+  <style>
+    h1 {
+        text-align: center;
+    }
+    #pokemon-list {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+    }
+    #pokemon-list li {
+      margin: 5px;
+    }
+    #pokemon-list a {
+      display: block;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
+      color: #333;
+      background-color: #f2f2f2;
+      transition: background-color 0.3s;
+    }
+    #pokemon-list a:hover {
+      background-color: grey;
+    }
+    #pokemon-details {
+      width: 50%;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 2em;
+      background-color: yellow;
+      margin-left: 600px;
+      border-width: 2px;
+    }
+    #pokemon-details h2 {
+      margin-top: 0;
+    }
+    #pokemon-details img {
+      display: block;
+      margin: 10px auto;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pokemon API Final</h1>
+  <div>
+    <ul id="pokemon-list"></ul>
+    <div id="pokemon-details"></div>
+  </div>
+
+  <script>
+    const pokemonList = document.querySelector('#pokemon-list');
+    const pokemonDetails = document.querySelector('#pokemon-details');
+
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+      .then(response => response.json())
+      .then(data => {
+        data.results.forEach(pokemon => {
+          const pokemonName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+          const pokemonLink = document.createElement('a');
+          pokemonLink.href = '#';
+          pokemonLink.dataset.url = pokemon.url;
+          pokemonLink.textContent = pokemonName;
+          pokemonLink.addEventListener('click', showPokemonDetails);
+          const pokemonListItem = document.createElement('li');
+          pokemonListItem.appendChild(pokemonLink);
+          pokemonList.appendChild(pokemonListItem);
+        });
+      })
+      .catch(error => console.log(error));
+
+    function showPokemonDetails(event) {
+      event.preventDefault();
+      const pokemonUrl = event.target.dataset.url;
+      fetch(pokemonUrl)
+        .then(response => response.json())
+        .then(data => {
+          const pokemonName = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+          const pokemonImage = data.sprites.front_default;
+          const pokemonTypes = data.types.map(type => type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)).join(', ');
+          const pokemonId = data.id;
+          pokemonDetails.innerHTML = `
+            <h2>${pokemonName}</h2>
+            <img src="${pokemonImage}" alt="${pokemonName}">
+            <p><strong>Type(s):</strong> ${pokemonTypes}</p>
+            <p><strong>Pokedex Number:</strong> ${pokemonId}</p>
+          `;
+        })
+        .catch(error => console.log(error));
+    }
+  </script>
+</body>
+</html>
